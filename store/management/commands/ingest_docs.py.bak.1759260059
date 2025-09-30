@@ -1,0 +1,79 @@
+# -*- coding: utf-8 -*-
+"""
+Ingest documents from a folder into the Document table.
+Usage:
+  python manage.py ingest_docs --path /absolute/or/relative/path
+Defaults to settings.DOCS_PATH if not provided.
+"""
+from __future__ import annotations
+from pathlib import Path
+from typing import Iterable
+from django.core.management.base import BaseCommand, CommandError
+from django.conf import settings
+from apps.store.models import Document
+
+PDF_OK = True
+try:
+    from pypdf import PdfReader  # optional
+except Exception:
+    PDF_OK = False
+
+ALLOWED_EXT = {".txt", ".md", ".pdf"}
+
+def iter_files(base: Path) -> Iterable[Path]:
+    for p in base.rglob("*"):
+        if p.is_file() and p.suffix.lower() in ALLOWED_EXT:
+            yield p
+
+def read_text(p: Path) -> str:
+    suf = p.suffix.lower()
+    if suf in {".txt", ".md"}:
+        try:
+            return p.read_text(encoding="utf-8", errors="ignore")
+        except Exception:
+            return ""
+    if suf == ".pdf" and PDF_OK:
+        try:
+            pdf = PdfReader(str(p))
+            return "\n".join((page.extract_text() or "") for page in pdf.pages)
+        except Exception:
+            return ""
+    return ""
+
+class Command(BaseCommand):
+    help = "Ingest .txt/.md/.pdf files into Document table."
+
+    def add_arguments(self, parser):
+        parser.add_argument("--path", default=settings.DOCS_PATH, help="Folder to ingest from")
+
+    def handle(self, *args, **opts):
+        base = Path(opts["path"]).expanduser()
+        if not base.exists():
+            raise CommandError(f"Path not found: {base}")
+
+        created = 0
+        updated = 0
+        skipped = 0
+
+        for p in iter_files(base):
+            text = read_text(p)
+            if not text.strip():
+                skipped += 1
+                continue
+            title = p.stem.replace("_", " ").strip()[:300]
+            obj, was_created = Document.objects.update_or_create(
+                source_path=str(p),
+                defaults={
+                    "title": title,
+                    "content": text,
+                    "mime_type": p.suffix.lower().lstrip("."),
+                },
+            )
+            created += 1 if was_created else 0
+            updated += 0 if was_created else 1
+
+        note = "(PDF parsing disabled; install pypdf)" if not PDF_OK else ""
+        self.stdout.write(self.style.SUCCESS(
+            f"Ingest complete from {base} | created={created} updated={updated} skipped={skipped} {note}"
+        ))
+
