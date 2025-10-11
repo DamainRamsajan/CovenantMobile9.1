@@ -1,0 +1,18 @@
+<!doctype html><html><head>
+<meta charset="utf-8">
+<title>Covenant</title>
+<link rel="manifest" href="{% static 'ui/manifest.webmanifest' %}">
+<script src="{% static 'ui/htmx.min.js' %}"></script>
+<link rel="stylesheet" href="{% static 'ui/styles.css' %}">
+</head><body>
+<nav>
+  <a href="/">Dashboard</a> |
+  <a href="/workflows/qa_form">Ask-Docs</a> |
+  <a href="/store/">Store</a> |
+  <a href="/configurator/">Configurator</a> |
+  <a href="/providers/health" target="_blank">Provider Health</a>
+</nav>
+<div class="container">
+  {% block content %}{% endblock %}
+</div>
+</body></html>

@@ -1,0 +1,10 @@
+{% load static %}
+<div class="card">
+  <h2>Ask Docs</h2>
+  <form hx-post="/workflows/qa" hx-target="#qaAnswer" hx-swap="innerHTML">
+    {% csrf_token %}
+    <input type="text" name="q" placeholder="Ask a question…" style="width:100%;padding:8px" />
+    <button type="submit" style="margin-top:8px">Ask</button>
+  </form>
+  <div id="qaAnswer" style="margin-top:12px;"></div>
+</div>

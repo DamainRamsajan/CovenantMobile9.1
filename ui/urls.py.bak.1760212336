@@ -1,10 +1,7 @@
-from . import views_llm
 from django.urls import path
 from .views import home, settings_view, diagnostics
 
 urlpatterns = [
-    path('chat', views_llm.chat, name='chat'),
-    path('diagnostics/llm', views_llm.llm_ping, name='llm_ping'),
     path('', home, name='home'),
     path('settings/', settings_view, name='settings'),
     path('diagnostics/', diagnostics, name='diagnostics'),

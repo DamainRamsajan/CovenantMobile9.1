@@ -1,0 +1,19 @@
+<h2>Configurator</h2>
+<p><a href="/configurator/profiles/new">New Profile</a> |
+   <a href="/configurator/kpis">KPIs</a> |
+   <a href="/configurator/scorecards">Scorecards</a> |
+   <a href="/configurator/playbooks">Playbooks</a></p>
+
+<h3>Profiles</h3>
+<ul>
+  {% for p in profiles %}
+    <li>
+      <strong>{{ p.name }}</strong> (domain: {{ p.domain }}) —
+      <a href="/configurator/profiles/{{p.id}}/edit">edit</a> |
+      <a href="/configurator/profiles/{{p.id}}/draft">generate draft</a> |
+      <a href="/configurator/profiles/{{p.id}}/publish">publish</a>
+    </li>
+  {% empty %}
+    <li>None yet.</li>
+  {% endfor %}
+</ul>

@@ -11,6 +11,24 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+
+def env_bool(name, default=False):
+    v = os.getenv(name)
+    if v is None:
+        return default
+    return v.lower() in ("1", "true", "yes", "on")
+
+# --- ENV / CONFIG ---
+BASE_DIR = Path(__file__).resolve().parent.parent
+DEBUG = env_bool("DJANGO_DEBUG", True)
+
+# Safe default key; overridden by DJANGO_SECRET_KEY in .env.prod
+DEFAULT_SECRET_KEY = "dev-insecure-change-me-now"
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", DEFAULT_SECRET_KEY)
+
+# Allow multiple comma-separated hosts in .env.prod
+ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -18,9 +36,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-n(ct+y#8(n!&1)@i$)f7(gd(*a+*2iimrdj_zuz7pga)!(y+mp'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -31,17 +46,25 @@ ALLOWED_HOSTS = ['127.0.0.1','localhost']
 # Application definition
 
 INSTALLED_APPS = [
-    'ui',
-    'store',
-    'providers',
-    'audit',
-    'django_htmx',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    # third-party
+    "django_htmx",
+
+    # django built-ins
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+
+    # project apps (note the apps.* paths)
+    "apps.ui",
+    "apps.store",
+    "apps.providers",
+    "apps.audit",
+    # include these if they exist in your tree:
+    "apps.workflows",
+    "apps.configurator",
 ]
 
 MIDDLEWARE = [
@@ -127,4 +150,9 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+
+
 

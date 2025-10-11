@@ -1,0 +1,10 @@
+<h2>Playbooks</h2>
+<p><a href="/configurator/playbooks/new">New Playbook</a></p>
+<ul>
+  {% for p in playbooks %}
+    <li>{{ p.profile.name }} — <strong>{{ p.name }}</strong> (trigger: {{ p.trigger }})
+      (<a href="/configurator/playbooks/{{p.id}}/edit">edit</a>)</li>
+  {% empty %}
+    <li>None yet.</li>
+  {% endfor %}
+</ul>

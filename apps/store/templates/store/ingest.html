@@ -1,0 +1,9 @@
+<h2>Upload Document</h2>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <label>Title</label>
+  <input name="title" type="text" style="width:100%;padding:6px" />
+  <label style="display:block;margin-top:8px">File</label>
+  <input name="file" type="file" />
+  <button type="submit" style="margin-top:8px">Upload</button>
+</form>

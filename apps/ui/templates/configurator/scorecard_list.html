@@ -1,0 +1,9 @@
+<h2>Scorecards</h2>
+<p><a href="/configurator/scorecards/new">New Scorecard</a></p>
+<ul>
+  {% for s in scorecards %}
+    <li>{{ s.profile.name }} — <strong>{{ s.name }}</strong> (<a href="/configurator/scorecards/{{s.id}}/edit">edit</a>)</li>
+  {% empty %}
+    <li>None yet.</li>
+  {% endfor %}
+</ul>

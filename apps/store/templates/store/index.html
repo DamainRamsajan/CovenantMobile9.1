@@ -1,0 +1,9 @@
+<h2>Documents</h2>
+<p><a href="/store/ingest">Upload new</a></p>
+<ul>
+  {% for d in docs %}
+    <li>{{ d.created_at|date:"Y-m-d H:i" }} — <strong>{{ d.title }}</strong> ({{ d.file.url }})</li>
+  {% empty %}
+    <li>No documents yet.</li>
+  {% endfor %}
+</ul>
