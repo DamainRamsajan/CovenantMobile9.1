@@ -1,0 +1,94 @@
+:root{
+  --bg:#0e1f29;
+  --card:#112532;
+  --card-2:#0f2330;
+  --text:#dbe7ef;
+  --muted:#a9bfcc;
+  --accent:#58d0ff;
+  --ok:#41d392;
+  --btn:#1b3a4b;
+  --btn-2:#184457;
+  --border:#274556;
+  --shadow: 0 12px 28px rgba(0,0,0,.35);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+
+/* —— KILL any legacy sidebar instantly —— */
+nav, .sidebar, .sidenav { display:none !important; position:static !important; width:0 !important; height:0 !important; }
+body { margin:0 !important; }
+#sidebar, #drawer { display:none !important; }
+/* Remove old layout offsets from previous sidebar layouts */
+body, .content, .container, .main { margin-left:0 !important; padding-left:0 !important; }
+
+/* Top bar */
+.topbar{
+  position:sticky; top:0; z-index:10;
+  background:linear-gradient(180deg, #0f2431 0%, #0e1f29 100%);
+  border-bottom:1px solid var(--border);
+  padding:14px 18px;
+  box-shadow:0 6px 18px rgba(0,0,0,.28);
+}
+.brand{font-weight:800;letter-spacing:.3px;color:#cfe9f6;font-size:22px}
+
+/* Main wrapper */
+.main{max-width:980px; margin:18px auto; padding:0 16px}
+
+/* Cards */
+.card{
+  background:linear-gradient(180deg, var(--card) 0%, var(--card-2) 100%);
+  border:1px solid var(--border);
+  border-radius:18px;
+  box-shadow:var(--shadow);
+  padding:18px;
+  margin:16px 0;
+}
+.card h2,.card h3{margin:0 0 10px 0}
+.muted{color:var(--muted)}
+
+/* Chat row */
+.chat-form{display:flex;gap:12px;margin-top:12px;flex-wrap:wrap}
+.chat-form input{
+  flex:1; min-width:220px;
+  padding:12px 14px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:#14242e;
+  color:var(--text);
+  outline:none;
+}
+.btn{
+  background:linear-gradient(180deg, var(--btn) 0%, var(--btn-2) 100%);
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:10px 16px;
+  min-width:96px;
+  text-align:center;
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  box-shadow:0 8px 18px rgba(0,0,0,.25);
+}
+.btn:hover{filter:brightness(1.06)}
+.btn-primary{border-color:#2a6b85}
+.btn-success{color:#b8f5dd}
+
+/* Section headings */
+h1{
+  font-size:34px; line-height:1.15; margin:8px 0 10px;
+  color:#e6f5ff; text-shadow:0 3px 12px rgba(0,0,0,.35);
+}
+
+/* Footer */
+.footer{opacity:.7; font-size:12px; padding:22px 16px 34px; text-align:center}
+
+/* Small screens */
+@media (max-width:420px){
+  h1{font-size:28px}
+  .main{padding:0 12px}
+}
+

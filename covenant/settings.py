@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
-import os
+import os, datetime
 
 def env_bool(name, default=False):
     v = os.getenv(name)
@@ -134,22 +134,29 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
-
+# ---- Termux-safe Timezone Fix ----
+# Explicitly set to Port of Spain to bypass missing tzdata in Android builds
+TIME_ZONE = "America/Port_of_Spain"
 USE_I18N = True
-
 USE_TZ = True
 
+# Ensure timezone environment variable exists even if tzdata is missing
+try:
+    datetime.datetime.now(datetime.timezone.utc)
+except Exception:
+    os.environ["TZ"] = TIME_ZONE
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
-
+STATIC_URL = "/static/"
+STATICFILES_DIRS = [ BASE_DIR / "apps" / "ui" / "static" ]
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
 
 
 

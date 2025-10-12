@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Chat Interface</h1>
+<p>This is a placeholder for the Covenant Mobile chat system.</p>
+<form id="chat-form">
+  <input type="text" name="message" placeholder="Ask something..." style="width:70%;">
+  <button type="submit">Send</button>
+</form>
+
+<div id="chat-response"></div>
+
+<script>
+document.getElementById('chat-form').onsubmit = async (e) => {
+  e.preventDefault();
+  const msg = e.target.message.value;
+  const res = await fetch('/chat/api/?q=' + encodeURIComponent(msg));
+  const data = await res.json();
+  document.getElementById('chat-response').innerText = data.response;
+};
+</script>
+{% endblock %}
+

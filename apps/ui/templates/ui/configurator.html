@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}Configurator – Covenant Mobile{% endblock %}
+{% block breadcrumb %}Dashboard / Configurator{% endblock %}
+
+{% block actions %}
+  <a class="btn" href="{% url 'kpi' %}">View KPIs</a>
+  <a class="btn" href="." title="Refresh">↻ Refresh</a>
+{% endblock %}
+
+{% block content %}
+<h1 style="margin:0 0 14px">AI Configurator</h1>
+<p>Enable/disable models and agents. This page reads the context vars <code>models</code> and <code>agents</code>.</p>
+
+<section class="grid-cards">
+  <div class="card">
+    <h3>Models</h3>
+    {% if models %}
+      <table class="table">
+        <thead><tr><th>Name</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody>
+          {% for m in models %}
+            <tr>
+              <td>{{ m.name }}</td>
+              <td>
+                {% if m.enabled %}
+                  <span class="badge" style="background:var(--ok);color:#041a1a">Enabled</span>
+                {% else %}
+                  <span class="badge" style="background:#444f;color:#cbd5e1">Disabled</span>
+                {% endif %}
+              </td>
+              <td class="actions">
+                <a class="btn" href="?toggle_model={{ m.name }}&enable=1">Enable</a>
+                <a class="btn danger" href="?toggle_model={{ m.name }}&disable=1">Disable</a>
+                <a class="btn" href="?set_default={{ m.name }}">Make Default</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="muted">No model metadata supplied.</p>
+    {% endif %}
+  </div>
+
+  <div class="card">
+    <h3>Default Model</h3>
+    <form method="post">
+      {% csrf_token %}
+      <label for="default_model">Select default:</label>
+      <select id="default_model" name="default_model" style="width:100%;margin:8px 0">
+        {% for m in models %}
+          <option value="{{ m.name }}" {% if m.default %}selected{% endif %}>{{ m.name }}</option>
+        {% endfor %}
+      </select>
+      <button class="btn" type="submit">Save</button>
+    </form>
+    {% if saved %}<p class="muted">Saved.</p>{% endif %}
+  </div>
+
+  <div class="card">
+    <h3>Agents</h3>
+    {% if agents %}
+      <ul style="margin:0;padding-left:18px">
+        {% for a in agents %}
+          <li>
+            <strong>{{ a.name }}</strong> – {{ a.status|default:"unknown" }}
+            <span class="actions">
+              <a class="btn" href="?toggle_agent={{ a.name }}&enable=1">Enable</a>
+              <a class="btn danger" href="?toggle_agent={{ a.name }}&disable=1">Disable</a>
+            </span>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="muted">No agent metadata supplied.</p>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  .table { width:100%; border-collapse: collapse; font-size:14px }
+  .table th, .table td { padding:8px 10px; border-bottom:1px solid var(--border) }
+  .badge { display:inline-block; padding:2px 8px; border-radius:999px; font-size:12px }
+  .actions .btn { margin-right:6px }
+  .btn.danger { background:#7f1d1d; }
+  .muted { color: var(--muted) }
+</style>
+{% endblock %}
+

@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% load static %}
+{% load tz %}
+
+{% block title %}Dashboard · Covenant Mobile{% endblock %}
+
+{% block content %}
+
+<!-- ===== Hero / Title (no “Welcome to” copy) ===== -->
+<section class="hero">
+  <h1>Covenant Mobile</h1>
+</section>
+
+<!-- ===== Status ===== -->
+<section class="grid-cards" style="margin-top:14px;">
+  <div class="card">
+    <h3>System</h3>
+    <p>Status: <strong style="color:var(--ok)">Online</strong></p>
+    <p>Local time: <strong>{% now "Y-m-d H:i" %}</strong></p>
+  </div>
+</section>
+
+<!-- ===== Primary actions ===== -->
+<section class="grid-cards" style="margin-top:14px;">
+  <!-- Ask a Question (input + send) -->
+  <div class="card">
+    <h3>Ask a Question</h3>
+    <p>Chat with the model using the current knowledge base.</p>
+    <form method="get" action="{% url 'chat' %}" class="chat-form" style="display:grid;gap:10px;">
+      <!-- If your chat view expects POST, switch method to POST and add {% csrf_token %} -->
+      <input
+        type="text"
+        name="q"
+        placeholder="Type your question…"
+        aria-label="Question"
+        style="padding:12px;border-radius:12px;border:1px solid #2d3b45;background:#0e1a22;color:#cfe6f3;"
+      />
+      <div style="display:flex;gap:8px;align-items:center;">
+        <button class="btn" type="submit">Send</button>
+        <!-- Voice toggle (wire later) -->
+        <button class="btn" type="button" onclick="alert('Voice input coming soon')">🎤 Voice</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Ingest Documents -->
+  <div class="card">
+    <h3>Ingest Documents</h3>
+    <p>Load PDFs, text and notes into the knowledge base.</p>
+    <a class="btn" href="{% url 'chat' %}?mode=ingest">Open Ingest</a>
+  </div>
+</section>
+
+<!-- ===== Secondary actions ===== -->
+<section class="grid-cards" style="margin-top:14px;">
+
+  <div class="card">
+    <h3>View KPIs</h3>
+    <p>Compliance & performance at a glance.</p>
+    <a class="btn" href="{% url 'kpi' %}">Open KPIs</a>
+  </div>
+
+  <div class="card">
+    <h3>Configurator</h3>
+    <p>Manage models and system agents.</p>
+    <a class="btn" href="{% url 'configurator' %}">Open Configurator</a>
+  </div>
+
+  <!-- MCP / Integrations -->
+  <div class="card">
+    <h3>MCP Connections</h3>
+    <p>Manage Model Context Protocol connections.</p>
+    <a class="btn" href="/mcp/">Open MCP</a>
+  </div>
+
+  <div class="card">
+    <h3>Swarm Management</h3>
+    <p>View and control active agent swarms.</p>
+    <a class="btn" href="/swarm/">Open Swarm</a>
+  </div>
+
+  <div class="card">
+    <h3>LLM Config</h3>
+    <p>Switch or reload local language models.</p>
+    <a class="btn" href="/llm/">Open LLM Config</a>
+  </div>
+
+  <div class="card">
+    <h3>Workflows</h3>
+    <p>Task pipelines (ingestion → embedding → serve).</p>
+    <a class="btn" href="/workflows/">Open Workflows</a>
+  </div>
+
+  <div class="card">
+    <h3>Policy & Governance</h3>
+    <p>Privacy, compliance and safety controls.</p>
+    <a class="btn" href="/policy/">Open Policy Console</a>
+  </div>
+
+  <div class="card">
+    <h3>Diagnostics</h3>
+    <p>Health checks and environment status.</p>
+    <a class="btn" href="/diagnostics/">Open Diagnostics</a>
+  </div>
+
+  <div class="card">
+    <h3>System Logs</h3>
+    <p>Review runtime and audit logs.</p>
+    <a class="btn" href="/logs/">Open Logs</a>
+  </div>
+
+  <div class="card">
+    <h3>Admin</h3>
+    <p>Users, permissions and maintenance.</p>
+    <a class="btn" href="{% url 'admin:index' %}">Open Admin</a>
+  </div>
+
+</section>
+
+{% endblock %}

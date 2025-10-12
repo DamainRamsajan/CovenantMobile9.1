@@ -1,18 +1,26 @@
-<!doctype html><html><head>
-<meta charset="utf-8">
-<title>Covenant</title>
-<link rel="manifest" href="{% static 'ui/manifest.webmanifest' %}">
-<script src="{% static 'ui/htmx.min.js' %}"></script>
-<link rel="stylesheet" href="{% static 'ui/styles.css' %}">
-</head><body>
-<nav>
-  <a href="/">Dashboard</a> |
-  <a href="/workflows/qa_form">Ask-Docs</a> |
-  <a href="/store/">Store</a> |
-  <a href="/configurator/">Configurator</a> |
-  <a href="/providers/health" target="_blank">Provider Health</a>
-</nav>
-<div class="container">
-  {% block content %}{% endblock %}
-</div>
-</body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}Covenant Mobile{% endblock %}</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'ui/css/theme.css' %}?v=5">
+</head>
+<body>
+  <!-- Simple top brand — no sidebar -->
+  <header class="topbar">
+    <div class="brand">Governance First LLM Integration</div>
+  </header>
+
+  <main class="main">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">
+    © {{ now|date:"Y" }} Intellica · All rights reserved.
+  </footer>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

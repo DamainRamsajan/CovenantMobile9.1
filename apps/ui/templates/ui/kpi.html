@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}KPIs – Covenant Mobile{% endblock %}
+
+{% block breadcrumb %}Dashboard / KPIs{% endblock %}
+
+{% block actions %}
+  <a class="btn" href="{% url 'configurator' %}">Open Configurator</a>
+  <a class="btn" href="." title="Refresh">↻ Refresh</a>
+{% endblock %}
+
+{% block content %}
+  <h1 style="margin:0 0 14px">KPI Dashboard</h1>
+
+  <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+    <div class="card">
+      <div style="font-weight:600;margin-bottom:6px">Compliance Score</div>
+      <div style="font-size:28px">{{ kpis.compliance_score|default:"—" }}</div>
+    </div>
+
+    <div class="card">
+      <div style="font-weight:600;margin-bottom:6px">Documents Ingested</div>
+      <div style="font-size:28px">{{ kpis.documents_ingested|default:"—" }}</div>
+    </div>
+
+    <div class="card">
+      <div style="font-weight:600;margin-bottom:6px">Agents Active</div>
+      <div style="font-size:28px">{{ kpis.agents_active|default:"—" }}</div>
+    </div>
+
+    <div class="card">
+      <div style="font-weight:600;margin-bottom:6px">Last Run</div>
+      <div>{{ kpis.last_run|default:"—" }}</div>
+    </div>
+
+    <div class="card">
+      <div style="font-weight:600;margin-bottom:6px">System Uptime</div>
+      <div>{{ kpis.uptime|default:"—" }}</div>
+    </div>
+  </section>
+
+  <p style="color:var(--muted);margin-top:12px">Updated: {% now "Y-m-d H:i" %}</p>
+{% endblock %}
+
