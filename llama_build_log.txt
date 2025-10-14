@@ -1,0 +1,21 @@
+[  2%] Built target ggml-base
+[  8%] Built target ggml-cpu
+[  8%] Building CXX object ggml/src/CMakeFiles/ggml.dir/ggml-backend-reg.cpp.o
+[  8%] Linking CXX shared library ../../bin/libggml.so
+[  8%] Built target ggml
+[  9%] Building CXX object src/CMakeFiles/llama.dir/llama.cpp.o
+[  9%] Building CXX object src/CMakeFiles/llama.dir/llama-adapter.cpp.o
+[ 10%] Building CXX object src/CMakeFiles/llama.dir/llama-arch.cpp.o
+[ 10%] Building CXX object src/CMakeFiles/llama.dir/llama-batch.cpp.o
+[ 10%] Building CXX object src/CMakeFiles/llama.dir/llama-chat.cpp.o
+[ 11%] Building CXX object src/CMakeFiles/llama.dir/llama-context.cpp.o
+[ 11%] Building CXX object src/CMakeFiles/llama.dir/llama-cparams.cpp.o
+[ 12%] Building CXX object src/CMakeFiles/llama.dir/llama-grammar.cpp.o
+[ 12%] Building CXX object src/CMakeFiles/llama.dir/llama-graph.cpp.o
+[ 12%] Building CXX object src/CMakeFiles/llama.dir/llama-hparams.cpp.o
+[ 13%] Building CXX object src/CMakeFiles/llama.dir/llama-impl.cpp.o
+[ 13%] Building CXX object src/CMakeFiles/llama.dir/llama-io.cpp.o
+[ 14%] Building CXX object src/CMakeFiles/llama.dir/llama-kv-cache.cpp.o
+[ 14%] Building CXX object src/CMakeFiles/llama.dir/llama-kv-cache-iswa.cpp.o
+[ 14%] Building CXX object src/CMakeFiles/llama.dir/llama-memory.cpp.o
+[ 15%] Building CXX object src/CMakeFiles/llama.dir/llama-memory-hybrid.cpp.o

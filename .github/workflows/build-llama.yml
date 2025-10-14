@@ -1,0 +1,37 @@
+name: Build Llama.cpp (ARM64 + Linux)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        arch: [arm64, x86_64]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y build-essential cmake git python3
+
+      - name: Configure build
+        run: |
+          mkdir -p build && cd build
+          cmake .. -DLLAMA_BUILD_SERVER=ON -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: |
+          cd build
+          cmake --build . -- -j$(nproc)
+
+      - name: Upload binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: llama-server-${{ matrix.arch }}
+          path: |
+            build/server
+            build/main
