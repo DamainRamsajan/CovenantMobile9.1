@@ -1,0 +1,24 @@
+# Core dependencies
+Django==5.0.6
+uvicorn==0.30.0
+gunicorn==22.0.0
+
+# ASGI / Web
+fastapi==0.111.0
+whitenoise==6.7.0
+
+# Environment and Config
+python-dotenv==1.0.1
+
+# Database and ORM
+sqlite-utils==3.36
+sqlparse==0.5.1
+
+# LLaMA / Local AI Integration
+requests==2.32.3
+httpx==0.27.0
+
+# Misc utilities
+pydantic==2.8.2
+jinja2==3.1.4
+
